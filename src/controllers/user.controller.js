@@ -15,9 +15,9 @@ const postUser = async (req, res, next) => {
  }
 };
 
-const listAllUsers = async (_req, res, next) => {
+const getAllUsers = async (_req, res, next) => {
   try {
-    const users = await userService.listAllUsers();
+    const users = await userService.getAllUsers();
     return res.status(200).json(users);
   } catch (err) {
     console.log(err.message);
@@ -39,6 +39,6 @@ const getUserById = async (req, res, next) => {
 
 module.exports = { 
   postUser,
-  listAllUsers,
+  getAllUsers,
   getUserById,
 };

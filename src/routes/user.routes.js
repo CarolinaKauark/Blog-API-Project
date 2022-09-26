@@ -7,7 +7,7 @@ const user = express.Router();
 
 user.get('/:id', authorizationToken, userController.getUserById);
 
-user.get('/', authorizationToken, userController.listAllUsers);
+user.get('/', authorizationToken, userController.getAllUsers);
 
 user.post('/', userMiddleware, userController.postUser);
 
