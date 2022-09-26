@@ -5,11 +5,6 @@ const loginMiddleware = (req, res, next) => {
   const { email, password } = req.body;
 
   const { error } = loginSchema.validate({ email, password });
-  // console.log(error);
-
-  // if (!email || !password) {
-  //   throw errorGenerate(400, 'Some required fields are missing');
-  // }
 
   if (error) {
     throw errorGenerate(400, 'Some required fields are missing');

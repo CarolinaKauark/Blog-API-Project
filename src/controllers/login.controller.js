@@ -1,20 +1,14 @@
-require('dotenv/config');
-const jwt = require('jsonwebtoken');
 const loginService = require('../services/login.service');
+const { generateToken } = require('../utils/JWT');
 
 const login = async (req, res, next) => {
-  console.log('controller');
   try {
     const { email, password } = req.body;
-    await loginService.login(email, password);
-    console.log('passou do service');
 
-    const jwtConfig = {
-      expiresIn: '1d',
-      algorithm: 'HS256',
-    };
+    const { id, displayName, image } = await loginService.login(email, password);
+    console.log({ id, displayName, image });
 
-    const token = jwt.sign({ data: { email } }, process.env.JWT_SECRET, jwtConfig);
+    const token = generateToken({ id, displayName, image });
 
     return res.status(200).json({ token });
   } catch (err) {
