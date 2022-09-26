@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: true,
     },
     published: DataTypes.DATE,
-    updated: DataTypes.Date, 
+    updated: DataTypes.DATE, 
   }, 
   {
     timestamps: false,
