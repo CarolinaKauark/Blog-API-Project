@@ -1,4 +1,4 @@
-const { loginSchema } = require('../utils/loginSchema');
+const { loginSchema } = require('../utils/schema');
 const errorGenerate = require('../utils/errorGenerate');
 
 const loginMiddleware = (req, res, next) => {

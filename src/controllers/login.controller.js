@@ -6,7 +6,6 @@ const login = async (req, res, next) => {
     const { email, password } = req.body;
 
     const { id, displayName, image } = await loginService.login(email, password);
-    console.log({ id, displayName, image });
 
     const token = generateToken({ id, displayName, image });
 
