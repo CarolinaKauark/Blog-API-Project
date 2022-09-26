@@ -12,4 +12,16 @@ const postUser = async (payload) => {
   return user;
 };
 
-module.exports = { postUser };
+const listAllUsers = async () => {
+  const users = await User.findAll({
+    attributes: {
+      exclude: ['password'],
+    },
+  });
+  return users;
+};
+
+module.exports = { 
+  postUser,
+  listAllUsers,
+};

@@ -16,4 +16,18 @@ const postUser = async (req, res, next) => {
  }
 };
 
-module.exports = { postUser };
+const listAllUsers = async (_req, res, next) => {
+  try {
+    const users = await userService.listAllUsers();
+    return res.status(200).json(users);
+  } catch (err) {
+    console.log('Erro no controller listAllUsers');
+    console.log(err.message);
+    next(err);
+  }
+};
+
+module.exports = { 
+  postUser,
+  listAllUsers,
+};
