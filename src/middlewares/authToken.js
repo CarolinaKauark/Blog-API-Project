@@ -6,7 +6,6 @@ const authorizationToken = (req, res, next) => {
   console.log(authorization);
   if (!authorization) {
     throw errorGenerate(401, 'Token not found');
-    // return res.status(401).json({ error: 'Token não encontrado' });
   }
   try {
     const decoded = authenticate(authorization);

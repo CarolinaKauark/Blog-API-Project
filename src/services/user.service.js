@@ -21,7 +21,21 @@ const listAllUsers = async () => {
   return users;
 };
 
+const getUserById = async (id) => {
+  const user = await User.findOne({ 
+    where: { id }, 
+    attributes: {
+    exclude: ['password'],
+    },
+  });
+  console.log(user);
+
+  if (!user) throw errorGenerate(404, 'User does not exist');
+  return user;
+};
+
 module.exports = { 
   postUser,
   listAllUsers,
+  getUserById,
 };
