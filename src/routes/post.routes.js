@@ -6,6 +6,7 @@ const { authorizationToken } = require('../middlewares/authToken');
 const post = express.Router();
 
 post.post('/', authorizationToken, postMiddleware, postController.insertBlogPost);
+post.get('/:id', authorizationToken, postController.getBlogPostById);
 post.get('/', authorizationToken, postController.getAllBlogPost);
 
 module.exports = post;
