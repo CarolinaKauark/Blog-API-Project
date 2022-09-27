@@ -11,7 +11,6 @@ const login = async (req, res, next) => {
 
     return res.status(200).json({ token });
   } catch (err) {
-      console.log('Erro no controller login');
       console.log(err.message);
       next(err);
     }

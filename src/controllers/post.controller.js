@@ -5,7 +5,6 @@ const insertBlogPost = async (req, res, next) => {
     const payload = req.body;
     
     const userId = req.user.id;
-    console.log('AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA', userId);
 
     const blogPost = await postService.insertBlogPost({ ...payload, userId });
 
@@ -39,8 +38,25 @@ const getBlogPostById = async (req, res, next) => {
   }
 };
 
+const updateBlogPostById = async (req, res, next) => {
+  try {
+    const userId = req.user.id;
+    const { id } = req.params;
+    const { body } = req;
+    console.log('bbbbbbb', body);
+
+    const updatedBlogPost = await postService.updateBlogPostById(userId, id, body);
+
+    return res.status(200).json(updatedBlogPost);
+  } catch (err) {
+    console.log(err.message);
+    next(err);
+  }
+};
+
 module.exports = {
   insertBlogPost,
   getAllBlogPost,
   getBlogPostById,
+  updateBlogPostById,
 };

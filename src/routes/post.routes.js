@@ -7,6 +7,7 @@ const post = express.Router();
 
 post.post('/', authorizationToken, postMiddleware, postController.insertBlogPost);
 post.get('/:id', authorizationToken, postController.getBlogPostById);
+post.put('/:id', authorizationToken, postMiddleware, postController.updateBlogPostById);
 post.get('/', authorizationToken, postController.getAllBlogPost);
 
 module.exports = post;

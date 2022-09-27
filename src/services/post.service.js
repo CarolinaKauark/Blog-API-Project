@@ -63,8 +63,23 @@ const getBlogPostById = async (id) => {
   return blogPost;
 };
 
+const updateBlogPostById = async (userId, id, body) => {
+  const blogPost = await getBlogPostById(id);
+  console.log('blooooooooooooooooooooog', blogPost);
+  console.log(userId, id);
+
+  if (blogPost.userId !== userId) throw errorGenerate(401, 'Unauthorized user');
+
+  await BlogPost.update(body, { where: { id } });
+
+  const newblogPost = await getBlogPostById(id);
+
+  return newblogPost;
+};
+
 module.exports = {
   insertBlogPost,
   getAllBlogPost,
   getBlogPostById,
+  updateBlogPostById,
 };
