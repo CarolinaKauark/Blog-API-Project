@@ -8,6 +8,7 @@ const postUser = async (req, res, next) => {
   const { id, displayName, image, email } = await userService.postUser(payload);
 
   const token = generateToken({ id, displayName, image, email });
+  
   return res.status(201).json({ token });
  } catch (err) {
   console.log(err.message);
@@ -18,6 +19,7 @@ const postUser = async (req, res, next) => {
 const getAllUsers = async (_req, res, next) => {
   try {
     const users = await userService.getAllUsers();
+
     return res.status(200).json(users);
   } catch (err) {
     console.log(err.message);
@@ -30,6 +32,7 @@ const getUserById = async (req, res, next) => {
     const { id } = req.params;
 
     const user = await userService.getUserById(id);
+
     return res.status(200).json(user);
   } catch (err) {
     console.log(err.message);
@@ -40,6 +43,7 @@ const getUserById = async (req, res, next) => {
 const deleteMe = async (req, res, next) => {
   try {
     const { id } = req.user;
+
     await userService.deleteMe(id);
 
     return res.status(204).end();

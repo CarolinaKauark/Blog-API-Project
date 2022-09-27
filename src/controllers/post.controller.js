@@ -2,8 +2,7 @@ const postService = require('../services/post.service');
 
 const insertBlogPost = async (req, res, next) => {
   try {
-    const payload = req.body;
-    
+    const payload = req.body;    
     const userId = req.user.id;
 
     const blogPost = await postService.insertBlogPost({ ...payload, userId });
@@ -29,6 +28,7 @@ const getAllBlogPost = async (req, res, next) => {
 const getBlogPostById = async (req, res, next) => {
   try {
     const { id } = req.params;
+    
     const blogPost = await postService.getBlogPostById(id);
 
     return res.status(200).json(blogPost);

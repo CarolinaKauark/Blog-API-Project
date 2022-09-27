@@ -1,6 +1,5 @@
- const { Sequelize, Op } = require('sequelize');
- const config = require('../config/config');
- // const { Op } = require("sequelize");
+const { Sequelize, Op } = require('sequelize');
+const config = require('../config/config');
 
 const { Category, BlogPost, PostCategory, User } = require('../models');
 const errorGenerate = require('../utils/errorGenerate');
