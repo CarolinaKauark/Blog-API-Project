@@ -63,18 +63,24 @@ const getBlogPostById = async (id) => {
   return blogPost;
 };
 
-const updateBlogPostById = async (userId, id, body) => {
+const isAuthorizedUser = async (userId, id) => {
   const blogPost = await getBlogPostById(id);
-  console.log('blooooooooooooooooooooog', blogPost);
-  console.log(userId, id);
-
   if (blogPost.userId !== userId) throw errorGenerate(401, 'Unauthorized user');
+};
+
+const updateBlogPostById = async (userId, id, body) => {
+  await isAuthorizedUser(userId, id);
 
   await BlogPost.update(body, { where: { id } });
 
-  const newblogPost = await getBlogPostById(id);
+  const newBlogPost = await getBlogPostById(id);
+  return newBlogPost;
+};
 
-  return newblogPost;
+const deleteBlogPostById = async (userId, id) => {
+  await isAuthorizedUser(userId, id);
+
+  await BlogPost.destroy({ where: { id } });
 };
 
 module.exports = {
@@ -82,4 +88,5 @@ module.exports = {
   getAllBlogPost,
   getBlogPostById,
   updateBlogPostById,
+  deleteBlogPostById,
 };

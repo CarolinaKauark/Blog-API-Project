@@ -43,11 +43,24 @@ const updateBlogPostById = async (req, res, next) => {
     const userId = req.user.id;
     const { id } = req.params;
     const { body } = req;
-    console.log('bbbbbbb', body);
 
     const updatedBlogPost = await postService.updateBlogPostById(userId, id, body);
 
     return res.status(200).json(updatedBlogPost);
+  } catch (err) {
+    console.log(err.message);
+    next(err);
+  }
+};
+
+const deleteBlogPostById = async (req, res, next) => {
+  try {
+    const userId = req.user.id;
+    const { id } = req.params;
+
+    await postService.deleteBlogPostById(userId, id);
+
+    return res.status(204).end();
   } catch (err) {
     console.log(err.message);
     next(err);
@@ -59,4 +72,5 @@ module.exports = {
   getAllBlogPost,
   getBlogPostById,
   updateBlogPostById,
+  deleteBlogPostById,
 };
