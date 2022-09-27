@@ -1,7 +1,7 @@
  const Sequelize = require('sequelize');
  const config = require('../config/config');
 
-const { Category, BlogPost, PostCategory } = require('../models');
+const { Category, BlogPost, PostCategory, User } = require('../models');
 const errorGenerate = require('../utils/errorGenerate');
 
 // Cria a configuração correta para o transaction
@@ -43,6 +43,14 @@ const insertBlogPost = async ({ title, content, userId, categoryIds }) => {
   }
 };
 
+const getAllBlogPost = async () => BlogPost.findAll({ 
+  include: [
+    { model: User, as: 'user', attributes: ['id', 'displayName', 'email', 'image'] }, 
+    { model: Category, as: 'categories', through: PostCategory },
+  ], 
+});
+
 module.exports = {
   insertBlogPost,
+  getAllBlogPost,
 };

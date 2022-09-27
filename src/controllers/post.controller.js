@@ -16,6 +16,18 @@ const insertBlogPost = async (req, res, next) => {
   }
 };
 
+const getAllBlogPost = async (req, res, next) => {
+  try {
+    const allBlogPost = await postService.getAllBlogPost();
+
+    return res.status(200).json(allBlogPost);
+  } catch (err) {
+    console.log(err.message);
+    next(err);
+  }
+};
+
 module.exports = {
   insertBlogPost,
+  getAllBlogPost,
 };
