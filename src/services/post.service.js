@@ -1,13 +1,12 @@
-// const Sequelize = require('sequelize');
+ const Sequelize = require('sequelize');
+ const config = require('../config/config');
 
 const { Category, BlogPost, PostCategory } = require('../models');
 const errorGenerate = require('../utils/errorGenerate');
 
-// const config = require('../config/config');
-
-// const env = process.env.NODE_ENV || 'development';
-
-// const sequelize = new Sequelize(config[env]);
+// Cria a configuração correta para o transaction
+const env = process.env.NODE_ENV || 'development';
+const sequelize = new Sequelize(config[env]);
 
 const findCategory = async (ids) => {
   const categories = await Promise.all(
@@ -19,20 +18,25 @@ const findCategory = async (ids) => {
   }
 };
 
-// const insertPostCategory = async() => {
-
-// }
+const insertPostCategory = async (categoryIds, postId, t) => {
+  await Promise.all(categoryIds
+    .map(async (categoryId) => PostCategory.create({ postId, categoryId },
+      { transaction: t })));
+};
 
 const insertBlogPost = async ({ title, content, userId, categoryIds }) => {
   await findCategory(categoryIds);
   try {
-    const newBlogPost = await BlogPost
-      .create({ title, content, userId, published: Date.now(), updated: Date.now() });
+    const result = await sequelize.transaction(async (t) => {
+      const newBlogPost = await BlogPost
+        .create({ title, content, userId, published: Date.now(), updated: Date.now() },
+         { transaction: t });
 
-    await Promise.all(categoryIds
-      .map(async (categoryId) => PostCategory.create({ postId: newBlogPost.id, categoryId })));
+      await insertPostCategory(categoryIds, newBlogPost.id, t);
 
-    return newBlogPost;
+      return newBlogPost;
+    });
+    return result;
   } catch (err) {
     console.log(err);
     throw err;
