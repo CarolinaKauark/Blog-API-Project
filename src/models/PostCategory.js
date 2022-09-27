@@ -2,11 +2,11 @@ module.exports = (sequelize, DataTypes) => {
   const PostCategory = sequelize.define('PostCategory', {
     postId: {
       type: DataTypes.INTEGER,
-      foreignKey: true,
+      // foreignKey: true,
     },
     categoryId: {
       type: DataTypes.INTEGER,
-      foreignKey: true,
+      // foreignKey: true,
     }
   },
   {
@@ -18,14 +18,16 @@ module.exports = (sequelize, DataTypes) => {
   PostCategory.associate = (models) => {
     models.Category.belongsToMany(models.BlogPost, {
       through: PostCategory,
-      foreignKey: 'category_id',
-      otherKey: 'post_id',
+      foreignKey: 'categoryId',
+      otherKey: 'postId',
+      as: 'posts',
     });
 
     models.BlogPost.belongsToMany(models.Category, {
       through: PostCategory,
-      foreignKey: 'post_id',
-      otherKey: 'category_id',
+      foreignKey: 'postId',
+      otherKey: 'categoryId',
+      as: 'categories',
     });
   }
 	

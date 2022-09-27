@@ -1,6 +1,6 @@
 const errorGenerate = require('../utils/errorGenerate');
 const { authenticate } = require('../utils/JWT');
-
+// 
 const authorizationToken = (req, res, next) => {
   const { authorization } = req.headers;
   console.log(authorization);
@@ -10,6 +10,7 @@ const authorizationToken = (req, res, next) => {
   try {
     const decoded = authenticate(authorization);
     console.log(decoded);
+
     req.user = { ...decoded };
     next();
   } catch (err) {
