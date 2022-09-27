@@ -11,4 +11,6 @@ user.get('/', authorizationToken, userController.getAllUsers);
 
 user.post('/', userMiddleware, userController.postUser);
 
+user.delete('/me', authorizationToken, userController.deleteMe);
+
 module.exports = user;

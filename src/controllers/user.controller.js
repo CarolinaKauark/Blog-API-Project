@@ -28,9 +28,21 @@ const getAllUsers = async (_req, res, next) => {
 const getUserById = async (req, res, next) => {
   try {
     const { id } = req.params;
-    console.log(id);
+
     const user = await userService.getUserById(id);
     return res.status(200).json(user);
+  } catch (err) {
+    console.log(err.message);
+    next(err);
+  }
+};
+
+const deleteMe = async (req, res, next) => {
+  try {
+    const { id } = req.user;
+    await userService.deleteMe(id);
+
+    return res.status(204).end();
   } catch (err) {
     console.log(err.message);
     next(err);
@@ -41,4 +53,5 @@ module.exports = {
   postUser,
   getAllUsers,
   getUserById,
+  deleteMe,
 };
