@@ -1,5 +1,6 @@
- const Sequelize = require('sequelize');
+ const { Sequelize, Op } = require('sequelize');
  const config = require('../config/config');
+ // const { Op } = require("sequelize");
 
 const { Category, BlogPost, PostCategory, User } = require('../models');
 const errorGenerate = require('../utils/errorGenerate');
@@ -43,20 +44,17 @@ const insertBlogPost = async ({ title, content, userId, categoryIds }) => {
   }
 };
 
-const getAllBlogPost = async () => BlogPost.findAll({ 
+const includeDefault = { 
   include: [
     { model: User, as: 'user', attributes: ['id', 'displayName', 'email', 'image'] }, 
     { model: Category, as: 'categories', through: PostCategory },
   ], 
-});
+};
+
+const getAllBlogPost = async () => BlogPost.findAll(includeDefault);
 
 const getBlogPostById = async (id) => {
-  const blogPost = await BlogPost.findByPk(id, { 
-    include: [
-      { model: User, as: 'user', attributes: ['id', 'displayName', 'email', 'image'] }, 
-      { model: Category, as: 'categories', through: PostCategory },
-    ], 
-  });
+  const blogPost = await BlogPost.findByPk(id, includeDefault);
 
   if (!blogPost) throw errorGenerate(404, 'Post does not exist');
 
@@ -83,10 +81,21 @@ const deleteBlogPostById = async (userId, id) => {
   await BlogPost.destroy({ where: { id } });
 };
 
+const getByQuery = async (q) => BlogPost.findAll({ 
+    where: { 
+      [Op.or]: [
+        { title: { [Op.like]: q } },
+        { content: { [Op.like]: q } },
+      ],
+    },
+    ...includeDefault,
+  });
+
 module.exports = {
   insertBlogPost,
   getAllBlogPost,
   getBlogPostById,
   updateBlogPostById,
   deleteBlogPostById,
+  getByQuery,
 };

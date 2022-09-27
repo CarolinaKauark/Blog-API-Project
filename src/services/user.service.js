@@ -28,8 +28,7 @@ const getUserById = async (id) => {
     exclude: ['password'],
     },
   });
-  console.log(user);
-
+  
   if (!user) throw errorGenerate(404, 'User does not exist');
   return user;
 };

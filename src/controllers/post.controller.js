@@ -67,10 +67,28 @@ const deleteBlogPostById = async (req, res, next) => {
   }
 };
 
+const getByQuery = async (req, res, next) => {
+  try {
+    const { q } = req.query;
+    if (!q) {
+      const allBlogPost = await postService.getAllBlogPost();
+      return res.status(200).json(allBlogPost);
+    }
+
+    const blogsByQuery = await postService.getByQuery(q);
+
+    return res.status(200).json(blogsByQuery);
+  } catch (err) {
+    console.log(err.message);
+    next(err);
+  }
+};
+
 module.exports = {
   insertBlogPost,
   getAllBlogPost,
   getBlogPostById,
   updateBlogPostById,
   deleteBlogPostById,
+  getByQuery,
 };
