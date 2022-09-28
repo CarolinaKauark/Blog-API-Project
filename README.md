@@ -3,6 +3,7 @@ Projeto desenvolvido no módulo de Back-end da [Trybe](https://www.betrybe.com/)
 
 ## ✏ Sobre o projeto
 O objetivo do projeto foi construir uma API RESTful e um banco de dados para produção e gerenciamento de conteúdo para um blog! 
+</br>
 A aplicação foi desenvolvida em <strong>Node.js</strong>, utilizando a <strong>arquitetura MSC</strong> - Model, Service, Controller -, juntamente a <strong>ORM Sequelize</strong> para realizar o CRUD dos posts.
 Para realizar as validações de entrada, foi utilizados a biblioteca <strong>JOI</strong> e para a geração e autenticação de token foi utilizado o JSON Web Token - <strong>JWT</strong>.
 
